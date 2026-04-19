@@ -12,14 +12,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        List<IPayment> paymentMethods = new ArrayList<>();
-        paymentMethods.add(new CardPayment());
-        //new
-        paymentMethods.add(new PayPalPayment());
-        paymentMethods.add(new CashPayment());
+        PaymentRegistry registry = new PaymentRegistry();
+        registry.scan();
 
         SwingUtilities.invokeLater(() -> {
-            PaymentFrame frame = new PaymentFrame(paymentMethods);
+            PaymentFrame frame = new PaymentFrame(registry.getPaymentMethods());
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         });

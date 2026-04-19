@@ -2,6 +2,7 @@ package com.n11.oop.payment;
 
 import com.n11.oop.interfaces.IPayment;
 
+@Payment(name="PayPal")
 public class PayPalPayment implements IPayment {
     @Override
     public boolean pay(double amount) {

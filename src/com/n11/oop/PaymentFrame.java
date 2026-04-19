@@ -1,11 +1,13 @@
 package com.n11.oop;
 
 import com.n11.oop.interfaces.IPayment;
+import com.n11.oop.payment.Payment;
 import com.n11.oop.payment.PaymentService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Objects;
 
 
 public class PaymentFrame extends JFrame {
@@ -28,6 +30,15 @@ public class PaymentFrame extends JFrame {
         DefaultListModel<IPayment> model = new DefaultListModel<>();
         for (IPayment p : paymentMethods) model.addElement(p);
         methodList = new JList<>(model);
+        methodList.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus){
+                IPayment p = (IPayment) value;
+                Payment ann = p.getClass().getAnnotation(Payment.class);
+                String displayName = (ann != null) ? ann.name() : p.getClass().getSimpleName();
+                return super.getListCellRendererComponent(list, displayName, index, isSelected, cellHasFocus);
+            }
+        });
         methodList.setSelectedIndex(0);
         methodList.setBorder(BorderFactory.createTitledBorder("Payment Methods"));
         add(new JScrollPane(methodList), BorderLayout.CENTER);
